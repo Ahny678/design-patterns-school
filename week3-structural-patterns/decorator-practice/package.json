@@ -1,0 +1,13 @@
+{
+  "name": "decorator-practice",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "tsc && node dist/src/main.js",
+    "test": "tsc && node --test dist/tests/PaymentService.test.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "typescript": "^5.4.0"
+  }
+}

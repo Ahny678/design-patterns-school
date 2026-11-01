@@ -1,0 +1,83 @@
+
+//FIRST ATTEMTPTS
+LoggingPaymentService interface PaymentService{
+constructor(protected wrappee: PaymentService)
+
+ charge(customerId: string, amount: number): void {
+    const message = this.wrappee.charge(customerId: string, amount: number);
+     console.log(message);
+
+  }
+
+ refund(paymentId: string): void {
+    const message = this.wrappee.refund(paymentId: string);
+     console.log(message);
+
+  }
+}
+
+
+MetricsPaymentService interface PaymentService{
+constructor(protected wrappee: PaymentService)
+private metrics = {
+  charge: {
+    calls: 0,
+    failures: 0,
+    totalDuration: 0,
+  },
+  refund: {
+    calls: 0,
+    failures: 0,
+    totalDuration: 0,
+  },
+};
+
+printMetrics(): void {
+  for (const method of ["charge", "refund"] as const) {
+    const metric = this.metrics[method];
+
+    console.log(`${method}:`);
+    console.log(`Calls: ${metric.calls}`);
+    console.log(`Failures: ${metric.failures}`);
+    console.log(
+      `Average Duration: ${this.getAverageDuration(method).toFixed(2)} ms`
+    );
+  }
+}
+
+ charge(customerId: string, amount: number): void {
+    const start = performance.now();
+    
+    try {
+      this.wrappee.charge(customerId: string, amount: number);
+    } catch (error) {
+      // Increment failure count here
+      throw error;
+    } finally {
+      const duration = performance.now() - start;
+      // Increment call count
+      // Add duration to totalDuration
+    }
+
+  }
+
+ refund(paymentId: string): void {
+
+const start = performance.now();
+
+    try {
+      // Call the wrapped method here
+     this.wrappee.refund(paymentId: string);
+    } catch (error) {
+      // Increment failure count here
+      throw error;
+    } finally {
+      const duration = performance.now() - start;
+    
+      // Increment call count
+      // Add duration to totalDuration
+    }
+
+  }
+}
+
